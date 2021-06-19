@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,6 +11,31 @@ namespace mosh_practice.Controllers
 {
     public class MoviesController : Controller
     {
+        //連接資料庫
+        private ApplicationDbContext _context;
+        public MoviesController()
+        {
+            _context = new ApplicationDbContext();
+        }
+        //釋放非受控資源
+        protected override void Dispose(bool disposing) //釋放非受控資源
+        {
+            _context.Dispose();
+        }
+        public ViewResult Index()
+        {
+            var movies = _context.Movies.Include(m => m.Genre).ToList();
+            return View(movies);
+
+        }
+        public ActionResult Details(int id)
+        {
+            var movie = _context.Movies.Include(m => m.Genre).SingleOrDefault(m => m.Id == id);
+            if (movie == null) { return HttpNotFound(); }
+            return View(movie);
+        }
+
+
         // GET: Movies/Random
         public ActionResult Random()
 
@@ -38,20 +64,8 @@ namespace mosh_practice.Controllers
         }
         */
         // url:movies
-        public ViewResult Index()
-        {
-            var movies = GetMovies();
-            return View(movies);
-
-        }
-        private IEnumerable<Movie> GetMovies()
-        {
-            return new List<Movie>
-            {
-                new Movie(){Id=1,Name="Shrek"},
-                new Movie(){Id=2,Name="Wall-e"}
-            };
-        }
+       
+        
 
 
     }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -14,6 +16,7 @@ namespace mosh_practice.Controllers
         {
             _context = new ApplicationDbContext(); //初始化
         }
+        
         protected override void Dispose(bool disposing) //釋放非受控資源
         {
             _context.Dispose();
@@ -21,13 +24,13 @@ namespace mosh_practice.Controllers
         // GET: Customers
         public ViewResult Index()
         {
-            var customers = _context.Customers.ToList();
+            var customers = _context.Customers.Include(c=>c.MembershipType).ToList();  //Query all the customer entity and related  MembershipType entity
             return View(customers);
         }
        
         public ActionResult Details(int id)
         {
-            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            var customer = _context.Customers.Include(c => c.MembershipType).SingleOrDefault(c => c.Id == id);
             if (customer == null) { return HttpNotFound(); }
             return View(customer);
         }
