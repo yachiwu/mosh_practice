@@ -10,6 +10,7 @@ using mosh_practice.Models.ViewModel;
 
 
 
+
 namespace mosh_practice.Controllers
 {
     public class CustomersController : Controller
@@ -43,14 +44,25 @@ namespace mosh_practice.Controllers
             var membershipType = _context.MembershipTypes.ToList();
             var viewModel = new CustomerFormViewModel //remember to add "using mosh_practice.Models.ViewModel;"
             {
+                Customer = new Customer(),
                 MembershipTypes = membershipType
             };
 
             return View("CustomerForm",viewModel);
         }
-        [HttpPost] //限定Create這個action只能是使用HttpPost進來
+        [HttpPost] //限定Save這個action只能是使用HttpPost進來
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Customer customer)
         {
+            if (!ModelState.IsValid)
+            {
+                var viewmodel = new CustomerFormViewModel
+                {
+                    Customer = customer,
+                    MembershipTypes = _context.MembershipTypes.ToList()
+                };
+                return View("CustomerForm", viewmodel);
+            }
             if (customer.Id == 0)
                 _context.Customers.Add(customer);
             else

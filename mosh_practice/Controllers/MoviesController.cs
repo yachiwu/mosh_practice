@@ -33,16 +33,26 @@ namespace mosh_practice.Controllers
         public ActionResult New()
         {
 
-            var genres = _context.Genres.ToList();
+            var genres = _context.Genre.ToList();
             var viewmodel = new MovieFormViewModel()
             {
+                
                 Genre = genres
             };
             return View("MovieForm",viewmodel);
         }
         [HttpPost]
-        public ActionResult Save (Movie movie) //create and update function
+        [ValidateAntiForgeryToken]
+        public ActionResult Save(Movie movie) //create and update function
         {
+            if (!ModelState.IsValid)
+            {
+                var viewmodel = new MovieFormViewModel(movie)
+                {
+                    Genre = _context.Genre.ToList()
+                };
+                return View("MovieForm", viewmodel);
+            }
             if (movie.Id == 0)
             {
                 _context.Movies.Add(movie);
@@ -69,10 +79,9 @@ namespace mosh_practice.Controllers
             }
             else
             {
-                var viewmodel = new MovieFormViewModel
+                var viewmodel = new MovieFormViewModel(movie)
                 {
-                    Movie = movie,
-                    Genre = _context.Genres.ToList()
+                    Genre = _context.Genre.ToList()
                 };
                 return View("MovieForm",viewmodel);
             };

@@ -9,7 +9,7 @@ namespace mosh_practice.Models
     {
         public int Id { get; set; }
         
-        [Required]
+        [Required(ErrorMessage = "Please enter customer's name")]
         [StringLength(255)]
         public string Name { get; set; }
 
@@ -22,6 +22,7 @@ namespace mosh_practice.Models
         [Display(Name = "Release Date")]
         public DateTime ReleaseDate { get; set; }
         [Display(Name = "Number In Stock")]
+        [Range(1, 20)]
         public byte NumberInStock { get; set; }
         
     }

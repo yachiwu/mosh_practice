@@ -10,7 +10,7 @@ namespace mosh_practice.Models
     {
         public int Id { get; set; }
        
-        [Required]
+        [Required(ErrorMessage ="Please enter customer's name")]
         [StringLength(255)]
         public string Name { get; set; }
         
@@ -22,6 +22,7 @@ namespace mosh_practice.Models
         public byte MembershipTypeId { get; set; }
        
         [Display(Name ="Date of Birth")]
-        public DateTime Birthdate { get; set; }
+        [Min18YearsIfAMember]
+        public DateTime Birthdate { get; set; } //這邊應該要寫datatime? 把它設為可以選填的欄位
     }
 }
