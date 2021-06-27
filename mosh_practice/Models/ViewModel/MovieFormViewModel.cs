@@ -32,21 +32,15 @@ namespace mosh_practice.Models.ViewModel
         {
             get
             {
-                if (Id != 0 )
-                {
-                    return "Edit Movie";
-                }
-                else
-                {
-                    return "New Movie";
-                }
+                return Id != 0 ? "Edit Movie" : "New Movie";
             }
                     
         }
-        public MovieFormViewModel()
+        public MovieFormViewModel() //default constructor
         {
             Id = 0;
         }
+        
         public MovieFormViewModel(Movie movie)
         {
             Id = movie.Id;
