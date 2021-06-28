@@ -12,8 +12,14 @@ namespace mosh_practice.App_Start
     {
         public MappingProfile()
         {
+            // Domain to Dto
             CreateMap<Customer, CustomerDto>(); //第一個參數是source,第二個是target
-            CreateMap<CustomerDto, Customer>();
+            CreateMap<Movie, MovieDto>();
+            //Dto to Domain
+            CreateMap<CustomerDto, Customer>()
+                .ForMember(c => c.Id, opt => opt.Ignore()); //tell AutoMapper to ignore Id during mapping of a CustomerDto to Customer.
+            CreateMap<MovieDto, Movie>()
+                .ForMember(m => m.Id, opt => opt.Ignore()); //tell AutoMapper to ignore Id during mapping of a MovieDto to Movie.
         }
     }
 }

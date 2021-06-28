@@ -23,9 +23,10 @@ namespace mosh_practice.Controllers.Api
             iMapper = config.CreateMapper();
         }
         //GET/api/customers 查看所有顧客
-        public IEnumerable<CustomerDto> GetCustomers()
+        public IHttpActionResult GetCustomers()
         {
-            return _context.Customers.ToList().Select(iMapper.Map<Customer, CustomerDto>); ;
+            var customerDtos = _context.Customers.ToList().Select(iMapper.Map<Customer, CustomerDto>);
+            return Ok(customerDtos);
         }
         //GET/api/customer/1 查看特定顧客
         public IHttpActionResult GetCustomer(int id)
@@ -53,7 +54,7 @@ namespace mosh_practice.Controllers.Api
         }
         //PUT/api/customers/1 修改顧客
         [HttpPut]
-        public void UpdateCustomer(int id, CustomerDto customerDto)
+        public IHttpActionResult UpdateCustomer(int id, CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
             {
@@ -66,11 +67,12 @@ namespace mosh_practice.Controllers.Api
             }
             iMapper.Map(customerDto, customerInDb);
             _context.SaveChanges();
+            return Ok();
 
         }
         //DELETE/api/customers/1 刪除顧客
         [HttpDelete]
-        public void DeleteCustomer(int id)
+        public IHttpActionResult DeleteCustomer(int id)
         {
             var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == id);
             if (customerInDb == null)
@@ -79,6 +81,7 @@ namespace mosh_practice.Controllers.Api
             }
             _context.Customers.Remove(customerInDb);
             _context.SaveChanges();
+            return Ok();
         }
 
     }
