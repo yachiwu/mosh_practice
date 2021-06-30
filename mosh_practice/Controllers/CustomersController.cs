@@ -29,8 +29,9 @@ namespace mosh_practice.Controllers
         // GET: Customers
         public ViewResult Index()
         {
-            var customers = _context.Customers.Include(c=>c.MembershipType).ToList();  //Query all the customer entity and related  MembershipType entity
-            return View(customers);
+            // var customers = _context.Customers.Include(c=>c.MembershipType).ToList();  //Query all the customer entity and related  MembershipType entity
+            //return View(customers);
+            return View();
         }
        
         public ActionResult Details(int id)
