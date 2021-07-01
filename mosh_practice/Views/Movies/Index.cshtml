@@ -4,37 +4,80 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Movies</h2>
-@Html.ActionLink("Create New Movie", "New", "Movies", null, new { @class = "btn btn-primary" })
-<table class="table table-hover">
+<h3>Movies</h3>
+@Html.ActionLink("Create New Movie", "New", "Movies", null, new { @class = "btn btn-primary mb-2" })
+<table id="movies" class="table table-hover">
     <thead>
         <tr>
             <th scope="col">Movie</th>
             <th scope="col">Genre</th>
-            <th scope="col">Edit</th>
             <th scope="col">Detail</th>
             <th scope="col">Delete</th>
 
         </tr>
     </thead>
     <tbody>
-        @foreach (var movie in Model)
-        {
-        <tr>
-            <td>@movie.Name</td>
-            <td>@movie.Genre.Name</td>
-            <td>@Html.ActionLink("Edit", "Edit", "Movies", new { id = movie.Id }, new { @class = "btn btn-default" })</td>
-            <td>@Html.ActionLink("Detail", "Details", "Movies", new { id = movie.Id }, new { @class = "btn btn-default" })</td>
-            <td>
-                @using (Html.BeginForm("Delete", "Movies", FormMethod.Post))
-                {
-                    @Html.Hidden("id", movie.Id)
-                    <input type="submit" value="delete" class="btn btn-default" />
-                }
-            </td>
-        </tr>
-        }
-
+        
     </tbody>
 </table>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#movies").DataTable({
+                ajax: {
+                    url: "/api/movies",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data,type,movie) {
+                            return "<a href='/movies/edit/" + movie.id + "'>" + movie.name + "</a>";
+                        }
+                    },
+                    {
+                        data:"genre.name"
+                    },
+                    {
+                        data: "id",
+                        render: function (data, type, movie) {
+                            return "<a class='btn btn-light' href='/movies/details/" + movie.id + "'>Details</a>";
+                        }
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn btn-light js-delete' data-movie-id=" + data + ">Delete</button>";
+                        }
+                    }
+
+                ]
+
+            });
+
+
+
+            $("#movies").on("click", ".js-delete", function () { //這種寫法只會有一個handler
+                var button = $(this);
+                bootbox.confirm("Are you sure you want to delete this movies ?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/movies/" + button.attr("data-movie-id"),
+                            method: "DELETE",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                            }
+                        });
+                    }
+                });
+              
+            });
+        });
+
+    </script>
+    
+}
 

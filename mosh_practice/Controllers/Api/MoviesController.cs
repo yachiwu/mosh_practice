@@ -3,6 +3,7 @@ using mosh_practice.App_Start;
 using mosh_practice.Dtos;
 using mosh_practice.Models;
 using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -26,7 +27,10 @@ namespace mosh_practice.Controllers.Api
         //GET/api/movies 查看所有電影
         public IEnumerable<MovieDto> GetMovies()
         {
-            return _context.Movies.ToList().Select(iMapper.Map<Movie,MovieDto>);
+            return _context.Movies
+                .Include(m=>m.Genre)
+                .ToList()
+                .Select(iMapper.Map<Movie,MovieDto>);
         }
         //GET/api/movies/1 查看特定電影
         public IHttpActionResult GetMovie(int id)

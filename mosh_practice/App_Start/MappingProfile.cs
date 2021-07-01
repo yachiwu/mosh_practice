@@ -16,6 +16,7 @@ namespace mosh_practice.App_Start
             CreateMap<Customer, CustomerDto>(); //第一個參數是source,第二個是target
             CreateMap<Movie, MovieDto>();
             CreateMap<MembershipType, MembershipTypeDto>();
+            CreateMap<Genre, GenreDto>();
             //Dto to Domain
             CreateMap<CustomerDto, Customer>()
                 .ForMember(c => c.Id, opt => opt.Ignore()); //tell AutoMapper to ignore Id during mapping of a CustomerDto to Customer.
