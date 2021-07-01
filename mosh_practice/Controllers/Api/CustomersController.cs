@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -25,7 +26,10 @@ namespace mosh_practice.Controllers.Api
         //GET/api/customers 查看所有顧客
         public IHttpActionResult GetCustomers()
         {
-            var customerDtos = _context.Customers.ToList().Select(iMapper.Map<Customer, CustomerDto>);
+            var customerDtos = _context.Customers
+                .Include(c=>c.MembershipType) 
+                .ToList()
+                .Select(iMapper.Map<Customer, CustomerDto>);
             return Ok(customerDtos);
         }
         //GET/api/customer/1 查看特定顧客

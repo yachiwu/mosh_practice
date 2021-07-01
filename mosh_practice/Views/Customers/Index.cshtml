@@ -6,8 +6,8 @@
 
 }
 
-<h2>Customer</h2>
-@Html.ActionLink("Create New Customer", "New", "Customers", null, new { @class = "btn btn-primary" })
+<h3>Customer</h3>
+@Html.ActionLink("Create New Customer", "New", "Customers", null, new { @class = "btn btn-primary mb-2" })
 
 <table id="customers" class="table table-hover">
     <thead>
@@ -18,7 +18,6 @@
         </tr>
     </thead>
     <tbody>
-            
     </tbody>
 </table>
 
@@ -28,10 +27,10 @@
     <script>
 
         $(document).ready(function () {
-            $("#customers").DataTable({
+            var table = $("#customers").DataTable({
                 ajax: {
                     url: "/api/customers",
-                    dataSrc:""
+                    dataSrc: ""
                 },
                 columns: [
                     {
@@ -41,7 +40,7 @@
                         }
                     },
                     {
-                        data: "name"
+                        data: "membershipType.name"
                     },
                     {
                         data: "id",
@@ -59,7 +58,7 @@
                             url: "/api/customers/" + button.attr("data-customer-id"),
                             method: "DELETE",
                             success: function () {
-                                button.parents("tr").remove();
+                                table.row(button.parents("tr")).remove().draw();
                             }
                         });
                     }
@@ -68,10 +67,6 @@
         });
     </script>
 }
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
-
 
 
 
