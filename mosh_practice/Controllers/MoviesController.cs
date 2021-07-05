@@ -27,10 +27,18 @@ namespace mosh_practice.Controllers
         {
             //var movies = _context.Movies.Include(m => m.Genre).ToList();
             //return View(movies);
-            return View();
+            if (User.IsInRole(RoleName.CanManageMovies))
+            {
+                return View("List");
+            }
+            else
+            {
+                return View("ReadOnlyList");
+            }
+            
 
         }
-       
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult New()
         {
 

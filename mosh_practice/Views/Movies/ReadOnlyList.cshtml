@@ -1,0 +1,57 @@
+﻿@model IEnumerable<mosh_practice.Models.Movie>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Movies</h3>
+
+<table id="movies" class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Movie</th>
+            <th scope="col">Genre</th>
+            <th scope="col">Detail</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+    </tbody>
+</table>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#movies").DataTable({
+                ajax: {
+                    url: "/api/movies",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name"
+                        
+                    },
+                    {
+                        data:"genre.name"
+                    },
+                    {
+                        data: "id",
+                        render: function (data, type, movie) {
+                            return "<a class='btn btn-light' href='/movies/details/" + movie.id + "'>Details</a>";
+                        }
+                    },
+                    
+
+                ]
+
+            });
+
+        });
+
+    </script>
+    
+}
+
