@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using mosh_practice.Models;
+using Microsoft.Owin.Security.Facebook;
 
 namespace mosh_practice
 {
@@ -53,10 +54,30 @@ namespace mosh_practice
             //app.UseTwitterAuthentication(
             //   consumerKey: "",
             //   consumerSecret: "");
+            var options = new FacebookAuthenticationOptions
+            {
+                AppId = "553699412304098",
+                AppSecret = "35a72a244b2b953ec50f3e5f771c472d",
+                CallbackPath = new PathString("/Account/ExternalLoginCallback/"),
+                Provider = new FacebookAuthenticationProvider
+                {
+                    OnAuthenticated = async context =>
+                    {
+                        // Retrieve the OAuth access token to store for subsequent API calls
+                        string accessToken = context.AccessToken;
 
+                        // Retrieve the username
+                        string facebookUserName = context.UserName;
+
+                        // You can even retrieve the full JSON-serialized user
+                        var serializedUser = context.User;
+                    }
+                }
+            };
+            app.UseFacebookAuthentication(options);
             //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+               //appId: "553699412304098",
+               //appSecret: "35a72a244b2b953ec50f3e5f771c472d");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{

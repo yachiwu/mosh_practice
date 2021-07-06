@@ -6,6 +6,20 @@ namespace mosh_practice.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
+        [Display(Name = "Driving License")]
+        public string DrivingLicense { get; set; }
+
+
+        [Required]
+        [StringLength(50)]
+        public string Phone { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        [Display(Name = "Name")]
+        public string Nickname { get; set; }
+
+        [Required]
         [Display(Name = "電子郵件")]
         public string Email { get; set; }
     }
@@ -68,6 +82,16 @@ namespace mosh_practice.Models
         [Required]
         [Display(Name = "Driving License")]
         public string DrivingLicense { get; set; }
+
+
+        [Required]
+        [StringLength(50)]
+        public string Phone { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        [Display(Name = "Name")]
+        public string Nickname { get; set; }
 
         [Required]
         [EmailAddress]

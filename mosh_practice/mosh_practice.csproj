@@ -250,6 +250,10 @@
     <Compile Include="Migrations\202107050847453_AddDrivingLicenseToUser.Designer.cs">
       <DependentUpon>202107050847453_AddDrivingLicenseToUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107060636316_AddPhoneAndNicknameToUser.cs" />
+    <Compile Include="Migrations\202107060636316_AddPhoneAndNicknameToUser.Designer.cs">
+      <DependentUpon>202107060636316_AddPhoneAndNicknameToUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -269,6 +273,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -665,6 +670,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107050847453_AddDrivingLicenseToUser.resx">
       <DependentUpon>202107050847453_AddDrivingLicenseToUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107060636316_AddPhoneAndNicknameToUser.resx">
+      <DependentUpon>202107060636316_AddPhoneAndNicknameToUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
