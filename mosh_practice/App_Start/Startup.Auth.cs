@@ -7,6 +7,7 @@ using Microsoft.Owin.Security.Google;
 using Owin;
 using mosh_practice.Models;
 using Microsoft.Owin.Security.Facebook;
+using System.Configuration;
 
 namespace mosh_practice
 {
@@ -54,10 +55,12 @@ namespace mosh_practice
             //app.UseTwitterAuthentication(
             //   consumerKey: "",
             //   consumerSecret: "");
+            var AppId = ConfigurationManager.AppSettings["AppId"];
+            var AppSecret = ConfigurationManager.AppSettings["AppSecret"];
             var options = new FacebookAuthenticationOptions
             {
-                AppId = "553699412304098",
-                AppSecret = "35a72a244b2b953ec50f3e5f771c472d",
+                AppId = AppId,
+                AppSecret = AppSecret,
                 CallbackPath = new PathString("/Account/ExternalLoginCallback/"),
                 Provider = new FacebookAuthenticationProvider
                 {
@@ -76,8 +79,8 @@ namespace mosh_practice
             };
             app.UseFacebookAuthentication(options);
             //app.UseFacebookAuthentication(
-               //appId: "553699412304098",
-               //appSecret: "35a72a244b2b953ec50f3e5f771c472d");
+            //appId: "",
+            //appSecret: "");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
