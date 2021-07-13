@@ -187,6 +187,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\CustomersController.cs" />
     <Compile Include="Controllers\Api\MoviesController.cs" />
+    <Compile Include="Controllers\Api\NewRentalController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="Dtos\GenreDto.cs" />
     <Compile Include="Dtos\MembershipTypeDto.cs" />
     <Compile Include="Dtos\MovieDto.cs" />
+    <Compile Include="Dtos\NewRentalDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -254,6 +256,14 @@
     <Compile Include="Migrations\202107060636316_AddPhoneAndNicknameToUser.Designer.cs">
       <DependentUpon>202107060636316_AddPhoneAndNicknameToUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107121303013_Create Rental Model.cs" />
+    <Compile Include="Migrations\202107121303013_Create Rental Model.Designer.cs">
+      <DependentUpon>202107121303013_Create Rental Model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107131139005_AddNumberAvailableToMovieModel.cs" />
+    <Compile Include="Migrations\202107131139005_AddNumberAvailableToMovieModel.Designer.cs">
+      <DependentUpon>202107131139005_AddNumberAvailableToMovieModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -263,6 +273,7 @@
     <Compile Include="Models\MembershipType.cs" />
     <Compile Include="Models\Min18YearsIfAMember.cs" />
     <Compile Include="Models\Movie.cs" />
+    <Compile Include="Models\Rental.cs" />
     <Compile Include="Models\RoleName.cs" />
     <Compile Include="Models\ViewModel\MovieFormViewModel.cs" />
     <Compile Include="Models\ViewModel\CustomerFormViewModel.cs" />
@@ -673,6 +684,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107060636316_AddPhoneAndNicknameToUser.resx">
       <DependentUpon>202107060636316_AddPhoneAndNicknameToUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107121303013_Create Rental Model.resx">
+      <DependentUpon>202107121303013_Create Rental Model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107131139005_AddNumberAvailableToMovieModel.resx">
+      <DependentUpon>202107131139005_AddNumberAvailableToMovieModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
