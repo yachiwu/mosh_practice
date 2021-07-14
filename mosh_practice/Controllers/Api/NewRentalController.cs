@@ -44,7 +44,7 @@ namespace mosh_practice.Controllers.Api
                 {
                     return BadRequest("Movie is not available."); //Edge Case : One or more  Movies are not available 
                 }
-                movie.NumberInStock--;
+                movie.NumberAvailable--;
                 var rental = new Rental
                 {
                     Customer = customer,

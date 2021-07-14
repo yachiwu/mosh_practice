@@ -24,10 +24,14 @@ namespace mosh_practice.Controllers.Api
             iMapper = config.CreateMapper();
         }
         //GET/api/customers 查看所有顧客
-        public IHttpActionResult GetCustomers()
+        public IHttpActionResult GetCustomers(string query=null)
         {
-            var customerDtos = _context.Customers
-                .Include(c=>c.MembershipType) 
+            var customerQuery = _context.Customers
+                .Include(c => c.MembershipType);
+            if (!string.IsNullOrWhiteSpace(query)) {
+                customerQuery = customerQuery.Where(c => c.Name.Contains(query));
+            }
+            var customerDtos = customerQuery
                 .ToList()
                 .Select(iMapper.Map<Customer, CustomerDto>);
             return Ok(customerDtos);

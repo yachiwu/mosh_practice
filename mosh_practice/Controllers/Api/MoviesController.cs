@@ -25,10 +25,16 @@ namespace mosh_practice.Controllers.Api
         }
 
         //GET/api/movies 查看所有電影
-        public IEnumerable<MovieDto> GetMovies()
+        public IEnumerable<MovieDto> GetMovies(string query = null)
         {
-            return _context.Movies
-                .Include(m=>m.Genre)
+            var moviesQuery = _context.Movies
+                .Include(m => m.Genre)
+                .Where(m => m.NumberAvailable > 0); //get available movies
+
+            if (!string.IsNullOrWhiteSpace(query)) {
+                moviesQuery = moviesQuery.Where(m => m.Name.Contains(query));
+            }
+            return moviesQuery
                 .ToList()
                 .Select(iMapper.Map<Movie,MovieDto>);
         }
