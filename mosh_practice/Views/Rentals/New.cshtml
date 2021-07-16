@@ -9,14 +9,14 @@
     <div class="form-group">
         <label> Customer</label>
         <div class="tt-container">
-            <input id="customer" type="text" value="" class="form-control">
+            <input id="customer"  name="customer" data-rule-validCustomer="true" required type="text" value="" class="form-control">
         </div>
     </div>
 
     <div class="form-group">
         <label> Movie</label>
         <div class="tt-container">
-            <input id="movie" type="text" value="" class="form-control">
+            <input id="movie" name="movie" data-rule-atLeastOneMovie="true" type="text" value="" class="form-control">
         </div>
         <div class="row mt-4">
             <div class="col-md-4 col-sm-4">
@@ -31,6 +31,7 @@
 
 @section scripts
 {
+    @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(document).ready(function () {
             var vm = {
@@ -77,22 +78,40 @@
                 $("#movie").typeahead("val", "");// clear the text box after selection
                 vm.movieIds.push(movie.id);
             });
-
-            $("#newRental").submit(function (e) {
-                e.preventDefault();
+            //create customer validator to ensure the customer is valid
+            $.validator.addMethod("validCustomer", function () {
+                return vm.customerId && vm.customerId !== 0;
+            }, "Please select a valid customer.");
+            // create movie validator to ensure at Least One Movie
+            $.validator.addMethod("atLeastOneMovie", function () {
+                return vm.movieIds.length > 0;
+            }, "Please select at least one movie.");
+            //ensure the form is valid
+            var validator = $("#newRental").validate({
+                submitHandler: function () {
                     $.ajax({
                         url: "/api/NewRental",
                         method: "POST",
                         data: vm
 
                     })
-                    .done(function () {
-                        toastr.success("Rental Successfully recored!")
-                    })
-                    .fail(function () {
-                        toastr.error("Something unexpected happened.")
-                    });
+                        .done(function () {
+                            toastr.success("Rental Successfully recored!");
+                            $("#customer").typeahead("val", "");
+                            $("#movie").typeahead("val", "");
+                            $("#movies").empty();
+                            vm = { movieIds: [] };
+                            validator.resetForm();
+                        })
+                        .fail(function () {
+                            toastr.error("Something unexpected happened.")
+                        });
+
+                    return false; //prevent the form submit normally
+                }
             });
+
+           
         });
 
     </script>
